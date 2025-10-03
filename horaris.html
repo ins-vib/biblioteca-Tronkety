@@ -6,9 +6,201 @@
   <style>
     body { font-family: Arial, sans-serif; margin: 40px; }
     table { border-collapse: collapse; width: 50%;  }
-    th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: center; }
+    th, td { 
+      border: 2px solid #ffb700; 
+      padding: 16px 24px; 
+      text-align: center; 
+      background: linear-gradient(90deg, #ffb700 0%, #ff5e62 100%);
+      color: #fff;
+      box-shadow: 0 2px 12px 0 rgba(255, 94, 98, 0.15), 0 0px 40px 0 #ffb70033;
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive, Arial, sans-serif;
+      /* Dopamine background: animated, colorful, moving shapes */
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: transparent;
+      }
+      .dopamine-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .dopamine-shape {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.7;
+        mix-blend-mode: lighten;
+        animation: dopamineMove 2s linear infinite, dopamineColor 1.2s linear infinite alternate;
+        will-change: transform, background;
+      }
+      @keyframes dopamineMove {
+        0% { transform: translateY(0) scale(1) rotate(0deg);}
+        25% { transform: translateY(-40vh) scale(1.2) rotate(90deg);}
+        50% { transform: translateY(0) scale(0.9) rotate(180deg);}
+        75% { transform: translateY(40vh) scale(1.1) rotate(270deg);}
+        100% { transform: translateY(0) scale(1) rotate(360deg);}
+      }
+      @keyframes dopamineColor {
+        0% { filter: hue-rotate(0deg) brightness(1.2) saturate(1.5);}
+        100% { filter: hue-rotate(360deg) brightness(1.6) saturate(2);}
+      }
+      </style>
+      <script>
+        // Generate dopamine shapes
+        document.addEventListener('DOMContentLoaded', function() {
+      const colors = [
+        'rgba(255, 94, 98, 0.7)',
+        'rgba(255, 183, 0, 0.7)',
+        'rgba(79, 140, 255, 0.7)',
+        'rgba(46, 204, 64, 0.7)',
+        'rgba(255, 0, 255, 0.7)',
+        'rgba(255, 255, 0, 0.7)',
+        'rgba(0, 255, 255, 0.7)'
+      ];
+      const bg = document.createElement('div');
+      bg.className = 'dopamine-bg';
+      for (let i = 0; i < 18; i++) {
+        const s = document.createElement('div');
+        s.className = 'dopamine-shape';
+        const size = 60 + Math.random() * 120;
+        s.style.width = s.style.height = size + 'px';
+        s.style.left = (Math.random() * 100) + 'vw';
+        s.style.top = (Math.random() * 100) + 'vh';
+        s.style.background = `radial-gradient(circle at 30% 70%, ${colors[i % colors.length]}, transparent 70%)`;
+        s.style.animationDuration = (1.2 + Math.random() * 1.5) + 's, ' + (0.8 + Math.random() * 1.2) + 's';
+        s.style.animationDelay = (Math.random() * 2) + 's, ' + (Math.random() * 2) + 's';
+        bg.appendChild(s);
+      }
+      document.body.prepend(bg);
+        });
+  </script>
+  <style>
+    th, td {
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 8px #ff5e62cc, 0 0px 2px #fff;
+      animation: dopamineFlash 1.2s infinite alternate;
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes dopamineFlash {
+      0% { filter: brightness(1.1) saturate(1.2); }
+      100% { filter: brightness(1.4) saturate(2) hue-rotate(20deg); }
+    }
+    th::after, td::after {
+      content: "✨";
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      font-size: 1.2em;
+      opacity: 0.7;
+      pointer-events: none;
+      animation: sparkle 1.5s infinite alternate;
+    }
+    @keyframes sparkle {
+      0% { opacity: 0.7; transform: scale(1) rotate(0deg);}
+      100% { opacity: 1; transform: scale(1.2) rotate(20deg);}
+    }
     th { background-color: #f2f2f2; }
-    caption { font-size: 1.5em; margin-bottom: 10px; }
+    caption {
+      font-size: 2em;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #333;
+      letter-spacing: 1px;
+    }
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    table {
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+    }
+    table:hover {
+      transform: scale(1.03);
+      box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.22);
+    }
+    th, td {
+      border: none;
+      padding: 16px 24px;
+      font-size: 1.1em;
+      transition: background 0.3s;
+    }
+    th {
+      background: #4f8cff;
+      color: #fff;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    tr {
+      transition: background 0.3s;
+    }
+    tbody tr:hover {
+      background: #e6f0ff;
+      cursor: pointer;
+    }
+    td:last-child {
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s;
+    }
+    td.closed {
+      color: #ff4f4f;
+      font-weight: bold;
+      animation: pulse 1.2s infinite alternate;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+    /* Animación de apertura/cierre */
+    td.open {
+      color: #2ecc40;
+      font-weight: bold;
+      animation: openGlow 1.2s infinite alternate;
+    }
+    @keyframes openGlow {
+      0% { text-shadow: 0 0 0px #2ecc40; }
+      100% { text-shadow: 0 0 8px #2ecc40; }
+    }
+    /* Botón de interacción */
+    .toggle-btn {
+      margin: 24px auto 0 auto;
+      display: block;
+      padding: 12px 32px;
+      background: #4f8cff;
+      color: #fff;
+      border: none;
+      border-radius: 24px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.10);
+      transition: background 0.3s, transform 0.2s;
+    }
+    .toggle-btn:hover {
+      background: #2563eb;
+      transform: scale(1.05);
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      table { width: 100%; }
+      th, td { padding: 10px 6px; font-size: 1em; }
+      caption { font-size: 1.2em; }
+    }
   </style>
 </head>
 <body>
@@ -43,13 +235,13 @@
       </tr>
       <tr>
         <td>Saturday</td>
-        <td>10:00 - 14:00</td>
-      </tr>
       <tr>
         <td>Sunday</td>
-        <td>Closed</td>
+        <td class="closed">Closed</td>
       </tr>
     </tbody>
   </table>
+</body>
+</html>le>
 </body>
 </html>
